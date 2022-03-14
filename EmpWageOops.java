@@ -1,50 +1,40 @@
 package com.bridgelabz;
-import java.util.Random;
 
-    public class EmpWageOops {
-         public static void main(String[] args) {
-             Attendance attendance = new Attendance();
-             //attendance.EmployeeCheck();
-             System.out.println("monthly wage is: "+attendance.EmployeeCheck());
-    }
-}
-        class Attendance{
-            static final int IS_PRESENT = 1;
-            static final int IS_ABSENT = 0;
-            static final int WAGE_PER_HOUR = 20;
-            static final int IS_FULL_TIME = 8;
-            static final int IS_PART_TIME = 4;
-            static final int NO_OF_WORKING_DAYS=20;
-            int dailyWage = 0;
-            int monthlyWage = 0;
+public class EmpWageOops {
+    //Constants
+    public static final int IS_PART_TIME=1;
+    public static final int IS_FULL_TIME=2;
 
-    int GetEmployeePresent(int a) {
-        Random r = new Random();
-        int empCheck = r.nextInt(a);
-        return empCheck;
-    }
-    int EmployeeCheck() {
-        int empCheck = GetEmployeePresent(3);
-        switch (empCheck) {
-            case IS_PRESENT: {
-                //System.out.println("Employee is present");
-                dailyWage = WAGE_PER_HOUR * IS_FULL_TIME;
-                break;
+    public static int computeEmpWage(String company,int empRatePerHour,
+                                     int numOfWorkingDays,int maxHoursPerMonth){
+        //variables
+        int empHrs=0,totalEmpHrs=0,totalWorkingDays=0;
+        //Computation
+        while (totalEmpHrs<= maxHoursPerMonth  &&
+                totalWorkingDays < numOfWorkingDays) {
+            totalWorkingDays++;
+            int empCheck =(int) Math.floor(Math.random() * 10 ) % 3 ;
+            switch (empCheck) {
+                case  IS_PART_TIME:
+                    empHrs =4;
+                    break;
+                case IS_FULL_TIME:
+                    empHrs =8;
+                    break;
+                default:
+                    empHrs =0;
 
             }
-            case IS_ABSENT: {
-                //System.out.println("Employee is Absent");
-               
-                break;
-            }
-            default: {
-                //System.out.println("Employee is Part time");
-                dailyWage = WAGE_PER_HOUR * IS_PART_TIME;
-                break;
-            }
-
+            totalEmpHrs += empHrs;
+            System.out.println("Day#:" + totalWorkingDays + " Emp Hr:" +empHrs);
         }
-        monthlyWage = NO_OF_WORKING_DAYS * dailyWage;
-        return monthlyWage;
+        int totalEmpWage = totalEmpHrs * empRatePerHour;
+        System.out.println("Total Emp Wage For Company:" +company+ " is:"+ totalEmpWage);
+        return totalEmpWage;
+
+    }
+    public static void main(String[] args){
+        computeEmpWage("Dmart",20,2,10);
+        computeEmpWage("Reliance",10,4,20);
     }
 }
